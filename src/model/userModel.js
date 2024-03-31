@@ -7,13 +7,19 @@ userModel.insertUsermdata = async (insdata) => {
         // let userModel = await dbmodel.getUserRegisterSchema();
         // let addData = await userModel.create(insdata);
         if (insdata.role === "Teacher") {
+            console.log("teacher 1");
             let teacherData = await dbmodel.getTeacherSchema();
+            console.log("teacher 2");
+
             await teacherData.create(insdata);
             return insdata
         }
 
         else {
+            console.log("student 1");
             let studentData = await dbmodel.getStudentSchema()
+            console.log("student 2");
+
             await studentData.create(insdata)
 
             return insdata

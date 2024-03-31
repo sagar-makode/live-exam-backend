@@ -28,7 +28,7 @@ router.post('/register', async (req, res, next) => {
       .status(400)
       .json("Something went wrong");
     //Going to the error handler middleware
-    next(error);
+
   }
 });
 
