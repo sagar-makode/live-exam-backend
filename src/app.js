@@ -17,7 +17,7 @@ const port = process.env.PORT || 5000;
 
 app.use(cors(
   {
-  origin: ["*"],
+  origin: ["https://myonlinexam.netlify.app'"],
   methods: ["GET", "POST","PUT"],
   credentials: true
 }
