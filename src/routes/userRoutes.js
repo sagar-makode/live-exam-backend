@@ -102,6 +102,7 @@ router.get("/dashboard", verifyJWT, async (req, res, next) => {
   try {
     const userId = req.userId
     const userData = await userService.userData(userId);
+    console.log(userId);
 
     if (userId) {
       res
