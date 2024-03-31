@@ -3,6 +3,14 @@ const router = express.Router();
 const userService = require('../service/userService');
 const jwt = require('jsonwebtoken');
 const verifyJWT = require('../midalware/auth.midalware');
+const dotenv   = require('dotenv')
+
+
+dotenv.config({
+  path: './.env'
+})
+
+const JWT_KEY = process.env.JWT_KEY
 
 
 //Route 1: Registering Profile in Database (POST: "/register")
@@ -31,7 +39,7 @@ router.post('/studentlogin', async (req, res, next) => {
     console.log("call");
     const { email, password } = req.body;
     const user = await userService.studentlogin(email, password);
-    const token = jwt.sign({ userId: user.id }, "mykey", { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id }, JWT_KEY, { expiresIn: '1h' });
 
     if (!user || user.message !== "Login Success") {
       return res
@@ -53,7 +61,7 @@ router.post('/studentlogin', async (req, res, next) => {
       .status(400)
       .json("Something went wrong")
     //Going to the error handler middleware
-    next(error);
+    // next(error);
   }
 });
 
@@ -63,7 +71,7 @@ router.post('/teacherlogin', async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await userService.teacherlogin(email, password);
-    const token = jwt.sign({ userId: user.id }, "mykey", { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id }, JWT_KEY, { expiresIn: '1h' });
 
     if (!user || user.message !== "Login Success") {
       return res

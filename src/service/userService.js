@@ -26,7 +26,8 @@ userService.studentlogin = async (email,password) => {
             return "";
         }
     } catch (error) {
-        throw new Error("Error in Login: " + error.message);
+        // throw new Error("Error in Login: " + error.message);
+      return error
     }
 };
 

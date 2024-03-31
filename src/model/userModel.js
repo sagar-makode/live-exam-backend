@@ -46,7 +46,8 @@ userModel.chekStudentlogin = async (email, password) => {
 
     } catch (error) {
         // If any error occurs, rethrow it
-        throw error;
+        // throw error;
+        return error
     }
 };
 

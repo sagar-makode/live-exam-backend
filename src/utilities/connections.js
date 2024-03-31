@@ -6,8 +6,9 @@ dotenv.config({
     path: './.env'
 })
 
-// const url = process.env.MONGODBURL
-const url = "mongodb://localhost:27017/exam-portal"
+const url = process.env.MONGODBURL
+
+// const url = "mongodb://localhost:27017/exam-portal"
 
 const teacherSchema = Schema({  
     name: String,
@@ -43,9 +44,13 @@ collection.getTeacherSchema = async () => {
     try {
         
         const dbconnection = await mongoose.connect(url, { dbName: 'exam-portal'});
+        
+
         const users = dbconnection.model('teacher', teacherSchema);
         return users;
     } catch (error) {
+        console.log(error);
+
         const err = new Error("Could not add the data");
         err.status = 500;
         throw err;
@@ -54,8 +59,11 @@ collection.getTeacherSchema = async () => {
 
 collection.getStudentSchema = async () => {
     try {
+       
+
   
         const dbconnection = await mongoose.connect(url, { dbName: 'exam-portal'});
+    
        
         const users = dbconnection.model('student', studentSchema);
         return users;

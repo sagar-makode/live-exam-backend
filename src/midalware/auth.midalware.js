@@ -1,6 +1,15 @@
 
 const jwt = require('jsonwebtoken')
 
+const dotenv   = require('dotenv')
+
+dotenv.config({
+  path: './.env'
+})
+
+const JWT_KEY = process.env.JWT_KEY
+
+
 
 const verifyJWT = async (req, res, next) =>{
     try {
@@ -13,7 +22,7 @@ const verifyJWT = async (req, res, next) =>{
         }
         // const tokens = req.headers.authorization.trim().split(' ')[1];
     
-        const decodedToken = jwt.verify(token, "mykey")
+        const decodedToken = jwt.verify(token, JWT_KEY)
 
       // Verify token
       req.userId = decodedToken.userId
