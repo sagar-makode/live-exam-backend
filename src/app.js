@@ -15,14 +15,7 @@ dotenv.config({
 //Port
 const port = process.env.PORT || 5000;
 
-app.use(cors(
-  {
-  origin: ["https://myonlinexam.netlify.app'"],
-  methods: ["GET", "POST","PUT"],
-  credentials: true
-}
-
-));
+app.use(cors());
 
 // Middleware
 app.use(cookieParser());
