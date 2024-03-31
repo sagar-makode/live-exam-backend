@@ -1,0 +1,21 @@
+2024-03-13T13:15:46.935Z: Error in Login: email is not defined
+2024-03-13T13:16:22.785Z: Error in Login: email is not defined
+2024-03-13T13:17:06.252Z: Error in Login: email is not defined
+2024-03-13T13:17:57.224Z: Error in Login: dbmodel.getUserByEmail is not a function
+2024-03-13T13:17:58.491Z: Error in Login: dbmodel.getUserByEmail is not a function
+2024-03-13T13:22:17.143Z: Error in Login: userCheck is not defined
+2024-03-13T13:22:19.652Z: Error in Login: userCheck is not defined
+2024-03-13T13:22:37.403Z: Error in Login: user.comparePassword is not a function
+2024-03-13T13:22:47.087Z: Error in Login: User not found
+2024-03-13T13:29:02.137Z: Invalid status code: {
+  message: 'Login Sucess',
+  id: new ObjectId('65f19b2d0b1895c7ae4244e3')
+}
+2024-03-30T20:19:37.830Z: Error in inserting data: Error in inserting form data: Could not add the data
+2024-03-30T20:23:24.871Z: Error in inserting data: Error in inserting form data: Could not add the data
+2024-03-30T20:34:19.861Z: Error in inserting data: Error in inserting form data: Could not add the data
+2024-03-30T20:36:51.931Z: Error in inserting data: Error in inserting form data: Could not add the data
+2024-03-30T20:41:23.789Z: Error in inserting data: Error in inserting form data: Could not add the data
+2024-03-30T20:42:27.581Z: Error in inserting data: Error in inserting form data: Could not add the data
+2024-03-30T20:43:21.220Z: Error in inserting data: Error in inserting form data: Could not add the data
+2024-03-30T21:10:31.541Z: Error in inserting data: Error in inserting form data: Could not add the data
