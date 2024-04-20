@@ -1,14 +1,8 @@
 const{ Schema } = require('mongoose');
 const mongoose = require('mongoose')
-const dotenv = require('dotenv')
 
-dotenv.config({
-    path: './.env'
-})
 
-const url = process.env.MONGODBURL
 
-// const url = "mongodb://localhost:27017/exam-portal"
 
 const teacherSchema = Schema({  
     name: String,
@@ -42,15 +36,10 @@ const collection = {};
 
 collection.getTeacherSchema = async () => {
     try {
-        
-        const dbconnection = await mongoose.connect(url, { dbName: 'exam-portal'});
-        
-
-        const users = dbconnection.model('teacher', teacherSchema);
+        // const dbconnection = await mongoose.connect(url);
+        const users = new mongoose.model('teacher', teacherSchema);
         return users;
     } catch (error) {
-        console.log(error);
-
         const err = new Error("Could not add the data");
         err.status = 500;
         throw err;
@@ -59,16 +48,10 @@ collection.getTeacherSchema = async () => {
 
 collection.getStudentSchema = async () => {
     try {
-       
-
-  
-        const dbconnection = await mongoose.connect(url, { dbName: 'exam-portal'});
-    
-       
-        const users = dbconnection.model('student', studentSchema);
+        // const dbconnection = await mongoose.connect(url);
+        const users = new mongoose.model('student', studentSchema);
         return users;
     } catch (error) {
-        console.log(error);
         const err = new Error("Could not add the data");
         err.status = 500;
         throw err;
@@ -77,8 +60,8 @@ collection.getStudentSchema = async () => {
 
 collection.gettestSchema = async () => {
     try {
-        const dbconnection = await mongoose.connect(url, { dbName: 'exam-portal'});
-        const test = dbconnection.model('test', testSchema);
+        // const dbconnection = await mongoose.connect(url);
+        const test = new mongoose.model('test', testSchema);
         return test;
     } catch (error) {
         const err = new Error("Could not add the data");
@@ -86,4 +69,5 @@ collection.gettestSchema = async () => {
         throw err;
     }
 };
+
 module.exports = collection;

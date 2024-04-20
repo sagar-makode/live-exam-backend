@@ -6,16 +6,17 @@ const requestLogger = require('./utilities/RequestLogger');
 const errorLogger = require('./utilities/ErrorLogger');
 const userRouter = require('./routes/userRoutes');
 const app = express();
-const dotenv   = require('dotenv')
 
-dotenv.config({
-  path: './.env'
-})
+const connectDB = require("./db/connection")
 
 //Port
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST","PUT","DELETE"],
+  credentials: true
+}));
 
 // Middleware
 app.use(cookieParser());
@@ -28,4 +29,17 @@ app.use('/', userRouter);
 app.use(errorLogger);
 
 //Backend started
-app.listen(port, () =>console.log(`Listening on http://localhost:${port} `));
+// app.listen(port, () =>console.log(`Listening on http://localhost:${port}`));
+// connectDB().then(
+// app.listen(port, () =>console.log(`Listening on http://localhost:${port}`))
+// ).catch(
+//   console.log("Connection Fail")
+// )
+connectDB()
+.then(() =>{
+
+  app.listen(port, () =>console.log(`Listening on http://localhost:${port}`))
+
+}).catch((error) =>{
+    console.log(`mongoDB connection failed `, error);
+});
