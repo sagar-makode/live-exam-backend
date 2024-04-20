@@ -1,6 +1,5 @@
-const{ Schema } = require('mongoose');
+const { Schema } = require('mongoose');
 const mongoose = require('mongoose')
-
 
 
 
@@ -9,6 +8,7 @@ const teacherSchema = Schema({
     email: String, 
     password: String,
     mobileNumber: Number,
+    subscribers:Array
 }, { versionKey: false });
 
 const studentSchema = Schema({  
@@ -16,18 +16,21 @@ const studentSchema = Schema({
     email: String, 
     password: String,
     mobileNumber: Number,
+    subscriptions:Array
 }, { versionKey: false });
 
 
 const testSchema = Schema({  
     teacherId: mongoose.Schema.Types.ObjectId, // Assuming teacher ID is stored in teacherProfileData.id
     testName : String,
+    testStatus: Boolean,
     totalMinutes : Number,
     category : String,
     questions: Array,
     totalMarks: Number,
     correctAnswers: Array,
-    submitedBy: Array
+    submitedBy: Array,
+    teacherName:String
 }, { versionKey: false });
 
 const collection = {};
@@ -69,5 +72,6 @@ collection.gettestSchema = async () => {
         throw err;
     }
 };
+
 
 module.exports = collection;
