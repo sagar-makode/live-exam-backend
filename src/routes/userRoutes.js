@@ -273,6 +273,237 @@ router.get('/teachercreatedtest',verifyJWT, async (req,res,next)=>{
   }
 })
 
+//ROUTE 11: For deleting the test. (PUT:"/deletetest")
+router.put('/deletetest',async (req,res,next)=>{
+  try {
+    testId=req.body.testId
+    const userData = await userService.deleteTestData(testId);
+    if (userData) {
+      res
+        .status(200)
+        .json(userData);
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No data is availble for this user" })
+    }
+
+  } catch (error) {
+    res
+      .status(400)
+      .json("Something went wrong"+error.message)
+    //Going to the error handler middleware
+  
+  }
+});
+
+//ROUTE 12: Used for undo the deletedTests
+router.put("/undodeletedtests",async (req,res,next)=>{
+  try {
+   const testId=req.body.testId
+  
+    let addexamData = await userService.undoDeletedExam( testId);
+ 
+    if (addexamData) {
+      res
+        .status(200)
+        .json(addexamData);
+    }
+
+  } catch (error) {
+    res
+      .status(400)
+      .json("Something went wrong")
+    //Going to the error handler middleware
+   
+  }
+})
+
+//ROUTE 13: For getting the bin data (GET:"trashdata")
+router.get("/trashdata",verifyJWT,async(req,res,next)=>{
+  try{
+  let userId=req.userId;  
+  const userData = await userService.binTestData(userId);
+  if (userData) {
+    res
+      .status(200)
+      .json(userData);
+  }
+  else {
+    res
+      .status(404)
+      .json({ "message": "No data is availble for this user" })
+  }
+
+} catch (error) {
+  res
+    .status(400)
+    .json("Something went wrong")
+  //Going to the error handler middleware
+  next(error);
+}
+});
+
+//ROUTE 11: DELETE Test Data Permanently
+router.delete('/deletetestpermanently/:testId',async (req,res,next)=>{
+  try {
+    testId=req.params.testId
+    const userData = await userService.deleteTestDataPermanently(testId);
+    if (userData) {
+      res
+        .status(200)
+        .json(userData);
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No data is availble for this user" })
+    }
+
+  } catch (error) {
+    res
+      .status(400)
+      .json("Something went wrong"+error.message)
+    //Going to the error handler middleware
+   
+  }
+});
+
+
+
+
+
+//ROUTE 13: For getting techer subscriber count from examid
+router.get("/subcount/:testId/:studentId",async(req,res,next)=>{
+  try{
+    const testId = req.params.testId;
+    const studentId = req.params.studentId
+    const getsubscribers = await userService.getadminsubcribers(testId,studentId);
+    if (getsubscribers) {
+      res
+        .status(200)
+        .json(getsubscribers);
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No data teacher found" })
+    }
+
+} catch (error) {
+  res
+    .status(400)
+    .json("Something went wrong")
+  //Going to the error handler middleware
+
+}
+});
+
+
+
+router.post('/subscribeToTeacher',verifyJWT, async (req, res, next) => {
+  try {
+    const { teacherId } = req.body;
+    let studentId=req.userId
+    let addsubcriber = await userService.insertsubcriber({ teacherId, studentId });
+ 
+    if (addsubcriber) {
+      res
+        .status(200)
+        .json(addsubcriber);
+    }
+
+  } catch (error) {
+    res
+      .status(400)
+      .json("Something went wrong")
+    //Going to the error handler middleware
+
+  }
+});
+
+
+
+
+
+router.post('/unsubscribetoTeacher',verifyJWT, async (req, res, next) => {
+  try {
+    const { teacherId } = req.body;
+    let studentId=req.userId
+    
+    let removeSubscriber = await userService.removeSubscriber({ teacherId, studentId });
+ 
+    if (removeSubscriber) {
+      res
+        .status(200)
+        .json(removeSubscriber);
+    }
+
+  } catch (error) {
+    res
+      .status(400)
+      .json("Something went wrong")
+    //Going to the error handler middleware
+   
+  }
+});
+
+
+
+
+router.get("/studentsubcriptions", verifyJWT, async (req, res, next) => {
+  try {
+    const userId = req.userId
+    const subcriptionData = await userService.studentsubcriptions(userId);
+
+    if (subcriptionData) {
+      res
+        .status(200)
+        .json(subcriptionData);
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No data is availble for this user" })
+    }
+
+  } catch (error) {
+    res
+      .status(400)
+      .json("Something went wrong")
+    //Going to the error handler middleware
+   
+  }
+})
+
+router.get("/allcreater", verifyJWT, async (req, res, next) => {
+  try {
+    const userId = req.userId
+
+    const allcreater = await userService.allcretares(userId);
+
+    if (allcreater) {
+      res
+        .status(200)
+        .json(allcreater)
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No test found" })
+    }
+
+  } catch (error) {
+    res
+      .status(400)
+      .json("Something went wrong")
+    //Going to the error handler middleware
+
+  }
+})
+
+
 
 // phot ke liye doodho
 module.exports = router;

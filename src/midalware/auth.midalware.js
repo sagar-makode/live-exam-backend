@@ -10,8 +10,6 @@ dotenv.config({
 const JWT_KEY = process.env.JWT_KEY
 
 
-
-
 const verifyJWT = async (req, res, next) =>{
     try {
 
