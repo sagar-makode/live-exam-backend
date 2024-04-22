@@ -28,7 +28,9 @@ const verifyJWT = async (req, res, next) =>{
 
       next();
     } catch (error) {
-        console.error(error)
+        // console.error(error)
+        res.status(500).json({message: "Token ERROR"})
+
     }
 }
 
