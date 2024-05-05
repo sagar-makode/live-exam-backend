@@ -219,4 +219,17 @@ userService.allcretares = async (id) => {
 };
 
 
+userService.updateData = async (data) => {
+    try {
+        let insertuserdata = await dbservice.updateUsermdata(data);
+        if (insertuserdata) {
+            return insertuserdata;
+        } else {
+            return "";
+        }
+    } catch (error) {
+        throw new Error("Error in inserting data: " + error.message);
+    }
+};
+
 module.exports = userService;

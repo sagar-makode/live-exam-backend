@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const verifyJWT = require('../midalware/auth.midalware');
 const dotenv   = require('dotenv')
 
+const upload = require('../midalware/multer.middlewares');
+const uploadOnCloudinary = require('../utilities/cloudinary')
 
 dotenv.config({
   path: './.env'
@@ -36,7 +38,6 @@ router.post('/register', async (req, res, next) => {
 //Route 2: For Student Login (POST:"/studentlogin")
 router.post('/studentlogin', async (req, res, next) => {
   try {
-    console.log("call");
     const { email, password } = req.body;
     const user = await userService.studentlogin(email, password);
     const token = jwt.sign({ userId: user.id }, JWT_KEY, { expiresIn: '1h' });
@@ -102,7 +103,6 @@ router.get("/dashboard", verifyJWT, async (req, res, next) => {
   try {
     const userId = req.userId
     const userData = await userService.userData(userId);
-    console.log(userId);
 
     if (userId) {
       res
@@ -503,6 +503,36 @@ router.get("/allcreater", verifyJWT, async (req, res, next) => {
   }
 })
 
+
+
+router.put('/updateprofile', upload.single('image'), async (req, res, next) => {
+  try {
+    if (req.file) {
+      const multerimage = req.file.path;
+      const cloudimage = await uploadOnCloudinary(multerimage);
+      const imagepath = cloudimage.url;
+      const { name, email, password, mobileNumber, role, dateOfBirth, gender, address, id } = req.body;
+      const updateuser = await userService.updateData({name, email, password, mobileNumber, role, dateOfBirth, gender, address, id , imagepath });
+      if (updateuser) {
+        res.status(200).json({ 'message': "Successfully Update Data" });
+      }
+    } else {
+      // If no image is uploaded, handle text data update
+      const { name, email, password, mobileNumber, role, dateOfBirth, gender, address, id } = req.body;
+      const updateuser = await userService.updateData({ name, email, password, mobileNumber, role, dateOfBirth, gender, address, id });
+      if (updateuser) {
+        res.status(200).json({ 'message': "Successfully Update Data" });
+      }
+    }
+
+  
+  } catch (error) {
+    res
+      .status(400)
+      .json("Something went wrong");
+
+  }
+});
 
 
 // phot ke liye doodho

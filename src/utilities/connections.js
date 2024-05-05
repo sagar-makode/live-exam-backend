@@ -8,7 +8,11 @@ const teacherSchema = Schema({
     email: String, 
     password: String,
     mobileNumber: Number,
-    subscribers:Array
+    subscribers:Array,
+    dateOfBirth:Date,
+    gender:String,
+    address:String,
+    imagepath:String
 }, { versionKey: false });
 
 const studentSchema = Schema({  
@@ -16,7 +20,11 @@ const studentSchema = Schema({
     email: String, 
     password: String,
     mobileNumber: Number,
-    subscriptions:Array
+    subscriptions:Array,
+    dateOfBirth:Date,
+    gender:String,
+    address:String,
+    imagepath:String
 }, { versionKey: false });
 
 

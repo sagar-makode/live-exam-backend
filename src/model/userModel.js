@@ -478,4 +478,30 @@ userModel.findallCreaters = async (id) => {
     }
 };
 
+
+userModel.updateUsermdata = async (data) => {
+
+    try {
+        // let userModel = await dbmodel.getUserRegisterSchema();
+        // let addData = await userModel.create(insdata);
+        if (data.role === "teacher") {
+            let teacherData = await dbmodel.getTeacherSchema();
+            await teacherData.findByIdAndUpdate(data.id, data, { new: true });
+            return data;
+        }
+
+        else {
+           
+            let studentData = await dbmodel.getStudentSchema();
+            // Find the student data by ID and update it
+            const updatedata = await studentData.findByIdAndUpdate(data.id, data, { new: true });
+           
+            return updatedata;
+        }
+
+    } catch (error) {
+        throw new Error("Error in inserting form data: " + error.message);
+    }
+};
+
 module.exports = userModel;
