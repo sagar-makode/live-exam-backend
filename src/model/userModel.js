@@ -504,4 +504,21 @@ userModel.updateUsermdata = async (data) => {
     }
 };
 
+
+
+userModel.findallCreatersforHomepage = async (id) => {
+    try {
+
+        let findcretaterData = await dbmodel.getTeacherSchema()
+        //not sending the answers
+        let data = await findcretaterData.find({}, { email: 0, password: 0, mobileNumber: 0,address:0,dateOfBirth:0,gender:0 });
+        
+        return data;
+
+
+    } catch (error) {
+        throw new Error("Error in inserting form data: " + error.message);
+    }
+};
+
 module.exports = userModel;

@@ -232,4 +232,18 @@ userService.updateData = async (data) => {
     }
 };
 
+userService.allcretaresforhomepage = async (id) => {
+    try {
+        let creaters = await dbservice.findallCreatersforHomepage();
+        if (creaters) {
+            return creaters;
+        } else {
+            return "";
+        }
+    } catch (error) {
+        throw new Error("Error in finding test: " + error.message);
+    }
+};
+
+
 module.exports = userService;

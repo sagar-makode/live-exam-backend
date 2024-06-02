@@ -535,5 +535,32 @@ router.put('/updateprofile', upload.single('image'), async (req, res, next) => {
 });
 
 
+router.get("/allcreaterforhomepage", async (req, res, next) => {
+  try {
+
+    const allcreaterforhomepage = await userService.allcretaresforhomepage();
+
+    if (allcreaterforhomepage) {
+      res
+        .status(200)
+        .json(allcreaterforhomepage)
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No test found" })
+    }
+
+  } catch (error) {
+    res
+      .status(400)
+      .json("Something went wrong")
+    //Going to the error handler middleware
+
+  }
+})
+
+
+
 // phot ke liye doodho
 module.exports = router;
