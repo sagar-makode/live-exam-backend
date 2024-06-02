@@ -127,8 +127,8 @@ router.get("/dashboard", verifyJWT, async (req, res, next) => {
 //ROUTE 5: Creating New Test (POST:"/createtest")
 router.post('/createtest', async (req, res, next) => {
   try {
-    const { teacherId, testName, totalMinutes, category, questions, correctAnswers, totalMarks } = req.body;
-    let addtest = await userService.InsertTest({ teacherId, testName, totalMinutes, category, questions, correctAnswers, totalMarks });
+    const { teacherId, testName, totalMinutes, category, questions, correctAnswers, totalMarks,teacherName } = req.body;
+    let addtest = await userService.InsertTest({ teacherId, testName, totalMinutes, category, questions, correctAnswers, totalMarks,teacherName });
 
     if (addtest) {
       res
