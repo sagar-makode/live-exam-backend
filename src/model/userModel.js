@@ -124,7 +124,7 @@ userModel.findTestData = async () => {
 
         let findtestData = await dbmodel.gettestSchema();
         //not sending the answers
-        let data = await findtestData.find({}, { submitedBy: 0, correctAnswers: 0, teacherId: 0 });
+        let data = await findtestData.find({}, { submitedBy: 0, correctAnswers: 0});
         let jsonData = [];
         for (let i = 0; i < data.length; i++) {
             if (!data[i].testStatus) {
