@@ -1,5 +1,7 @@
 require('dotenv').config({ path: './environment.env' });
 const sgMail = require('@sendgrid/mail');
+const dotenv = require('dotenv')
+
 dotenv.config({
   path: './.env'
 })
