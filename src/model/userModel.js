@@ -521,4 +521,126 @@ userModel.findallCreatersforHomepage = async (id) => {
     }
 };
 
+
+
+userModel.generatedOtp = async (email,isStudent,newuser) => {
+    try {
+        if(isStudent){
+            const loginModel = await dbmodel.getStudentSchema();
+            const user = await loginModel.findOne({ email: email });
+            const token = generateToken();
+            if(newuser && user===null){
+              await mailService.conformation(token, email,"OTP for new User");
+              myCache.set(email, token);
+            //   console.log("Token Generated for ",email," and OTP ",token)
+              return { message: "key generated" };
+            }
+
+            else if(!newuser && user!==null){
+            await mailService.conformation(token, email,"forgot password OTP for Student");
+             myCache.set(email, token);
+            //  console.log("Token Generated for ",email," and OTP ",token)
+             return { message: "key generated" };
+
+            }
+            else if(newuser && user!==null) {
+                // console.log("Error")
+                return {message: "User Already Registered"};
+                 
+            }
+            else{
+                // console.log("Error ")
+                return { message: "Email Dosen't Exist in the database" };
+            }
+        }
+        else{
+            let teacherModel = await dbmodel.getTeacherSchema();
+            let user = await teacherModel.findOne({ email: email });
+            const token = generateToken();
+            if(newuser && user===null){
+              await mailService.conformation(token, email,"OTP for new User");
+              myCache.set(email, token);
+            //   console.log("Token Generated for ",email," and OTP ",token)
+              return { message: "key generated" };
+            }
+
+            else if(!newuser && user!==null){
+            await mailService.conformation(token, email,"forgot password OTP for Student");
+             myCache.set(email, token);
+            //  console.log("Token Generated for ",email," and OTP ",token)
+             return { message: "key generated" };
+
+            }
+            else if(newuser && user!==null) {
+                return {message: "User Already Registered"};
+                 
+            }
+            else{
+                return { message: "Email Dosen't Exist in the database" };
+            }
+        }    
+
+    } catch (error) {
+        throw new Error("Error in inserting form data: " + error.message);
+    }
+}
+
+
+//OTP Varification For ForgotPassword and NewUser
+userModel.vairfyOTP = async (email, otp) => {
+     const otpdata=await myCache.get(email);
+  if(otpdata!==undefined){
+        if (otp === String(otpdata)) {
+            // console.log("otp varified")
+            return "otp varified";
+        }
+        else {
+            // console.log("otp not varified")
+            return "otp not varified";
+        }
+    }
+    else {
+        // console.log("OTP Expired, Wait or try again Later")
+        return "something went wrong"
+    }
+}
+
+userModel.resetPassword=async(email,isStudent,password)=>{ 
+    try {
+
+        if(isStudent){
+            // console.log("student",email)
+            let loginModel = await dbmodel.getStudentSchema();
+          const update=  await loginModel.updateOne(
+                { "email": email }, 
+                 { password: password } 
+              );
+              if (update.modifiedCount === 0) {
+                throw new Error("No user found with the provided email");
+              }
+            //   console.log("Password Reset Successful");
+            //   mailService.passwordReset(email);
+              return "Password updated successfully";
+        }
+        else{
+            // console.log("teacher",email)
+            let loginModel = await dbmodel.getTeacherSchema();
+            const update=  await loginModel.updateOne(
+                { "email": email }, 
+                 { password: password } 
+              );
+              if (update.modifiedCount === 0) {
+                throw new Error("No user found with the provided email");
+              }
+            //   console.log("Password Reset Successful");
+            //   mailService.passwordReset(email);
+              return "Password updated successfully";
+        }
+
+    } catch (error) {
+        throw new Error("Error in Resetting Password" + error.message);
+    }
+}
+
+
 module.exports = userModel;

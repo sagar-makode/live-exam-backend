@@ -535,6 +535,80 @@ router.put('/updateprofile', upload.single('image'), async (req, res, next) => {
 });
 
 
+
+router.post('/generateopt',async (req,res)=>{
+  try {
+    const {email,isStudent,newuser} = req.body;
+    const generatedOtp = await userService.generatedOtp(email,isStudent,newuser);
+    if (generatedOtp) {
+      res
+        .status(200)
+        .json(generatedOtp)
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No test found" })
+    }
+
+  } catch (error) {
+    // console.log(error.message)
+    res
+      .status(400)
+      .json(`Something went wrong ${error.message}`);
+}
+});
+
+
+router.post('/varifyopt', async (req,res)=>{
+  try {
+    
+    const {email,otp} = req.body;
+    const varifyopt = await userService.vairfyOTP(email,otp);
+    if (varifyopt) {
+      res
+        .status(200)
+        .json(varifyopt)
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No test found" })
+    }
+
+  } catch (error) {
+    res
+      .status(400)
+      .json(`Something went wrong ${error.message}`);
+}
+})
+
+
+router.post('/reset',async(req,res)=>{
+  try {
+    const {email,isStudent, password} = req.body;
+    const resetPassword = await userService.resetPassword(email,isStudent,password);
+    if (resetPassword) {
+      res
+        .status(200)
+        .json(resetPassword)
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No test found" })
+    }
+
+  } catch (error) {
+    // console.log(error.message)
+    res
+      .status(400)
+      .json(`Something went wrong ${error.message}`);
+}
+})
+
+
+
 router.get("/allcreaterforhomepage", async (req, res, next) => {
   try {
 

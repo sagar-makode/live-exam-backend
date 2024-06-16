@@ -246,4 +246,36 @@ userService.allcretaresforhomepage = async (id) => {
 };
 
 
+
+userService.generatedOtp = async (email, isStudent, newuser) => {
+    try {
+        let otpData = await dbservice.generatedOtp(email, isStudent, newuser);
+        return otpData;
+
+    } catch (error) {
+        throw new Error("Error in removing subscriber: " + error.message);
+    }
+};
+
+userService.resetPassword = async (email, isStudent, password) => {
+    try {
+        let resetPassword = await dbservice.resetPassword(email, isStudent, password);
+        return resetPassword;
+
+    } catch (error) {
+        throw new Error("Error in removing subscriber: " + error.message);
+    }
+};
+
+userService.vairfyOTP = async (email, otp) => {
+    try {
+        let otpData = await dbservice.vairfyOTP(email, otp);
+        return otpData;
+
+    } catch (error) {
+        throw new Error("Error in removing subscriber: " + error.message);
+    }
+};
+
+
 module.exports = userService;
