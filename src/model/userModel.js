@@ -1,6 +1,14 @@
 const dbmodel = require('../utilities/connections');
 const userModel = {};
+const mailService = require('../mailService/mailService')
+const crypto = require('crypto');
+const NodeCache = require('node-cache');
+const myCache = new NodeCache(); 
 
+
+function generateToken() {
+    return crypto.randomInt(1000, 10000);
+}
 
 userModel.insertUsermdata = async (insdata) => {
     try {
