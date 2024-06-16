@@ -442,7 +442,7 @@ userModel.removesubcriberfromteacher = async (data) => {
 userModel.findSubscriptions = async (id) => {
     try {
         const teacherProfile = await dbmodel.getTeacherSchema();
-        const teachers = await teacherProfile.find({ subscribers: id }, { _id: 0, email: 0, password: 0, mobileNumber: 0 });
+        const teachers = await teacherProfile.find({ subscribers: id }, { email: 0, password: 0, mobileNumber: 0 });
         return teachers
 
     } catch (error) {
