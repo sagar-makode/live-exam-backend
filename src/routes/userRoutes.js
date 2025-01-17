@@ -634,6 +634,30 @@ router.get("/allcreaterforhomepage", async (req, res, next) => {
   }
 })
 
+router.get("/learning/:topic",async(req,res,next)=>{
+  try{
+    const topic = req.params.topic;
+    const topicdata = await userService.gettopicdata(topic);
+    if (topicdata) {
+      res
+        .status(200)
+        .json(topicdata);
+    }
+    else {
+      res
+        .status(404)
+        .json({ "message": "No data found" })
+    }
+
+} catch (error) {
+  res
+    .status(400)
+    .json("Something went wrong")
+  //Going to the error handler middleware
+}
+});
+
+
 
 
 // phot ke liye doodho

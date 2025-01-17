@@ -41,6 +41,13 @@ const testSchema = Schema({
     teacherName:String
 }, { versionKey: false });
 
+const topicSchema =  Schema({
+    pageTitle: String,
+    description: String,
+    urlname:String,
+    categories:Array
+    // content:  mongoose.Schema.Types.Mixed, 
+    }, { versionKey: false });
 const collection = {};
 
 
@@ -76,6 +83,19 @@ collection.gettestSchema = async () => {
         return test;
     } catch (error) {
         const err = new Error("Could not add the data");
+        err.status = 500;
+        throw err;
+    }
+};
+
+
+collection.getLearningSchema = async () => {
+    try {
+        // const dbconnection = await mongoose.connect(url);
+        const learning = new mongoose.model('learning', topicSchema);
+        return learning;
+    } catch (error) {
+        const err = new Error("Could not get the data");
         err.status = 500;
         throw err;
     }

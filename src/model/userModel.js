@@ -650,5 +650,16 @@ userModel.resetPassword=async(email,isStudent,password)=>{
     }
 }
 
+userModel.gettopic = async (topic) => {
+    try {
+        let topicModel = await dbmodel.getLearningSchema();
+        let data = await topicModel.find({ urlname: topic });  // Filter by pageTitle
+        return data
+    } catch (error) {
+        throw new Error("Error in inserting form data: " + error.message);
+    }
+
+}
+
 
 module.exports = userModel;

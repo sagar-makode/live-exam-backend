@@ -277,5 +277,14 @@ userService.vairfyOTP = async (email, otp) => {
     }
 };
 
+userService.gettopicdata=async(topic)=>{
+    try{
+        let data=await dbservice.gettopic(topic);
+        return data;
+    }catch (error) {
+        throw new Error("Error in geting data: " + error.message);
+    }
+}
+
 
 module.exports = userService;
